@@ -1,7 +1,14 @@
 apiVersion: v2
 name: helm-powerdns-authoritative
-description: A Helm chart for deploying PowerDNS Authoritative
-
+description: A Helm chart for deploying an instance of the DNS software "PowerDNS Authoritative Server"
+keywords:
+  - pdns
+  - powerdns
+  - auth
+  - authoritative
+  - dns
+  - nameserver
+home: https://github.com/martydingo/helm-powerdns-authoritative
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives
@@ -27,3 +34,5 @@ maintainers:
     email: martin.george@dingo.management
     url: https://s.gravatar.com/avatar/364bababfd0f533bf64b60c8a206e851
 icon: https://avatars.githubusercontent.com/u/1282630
+sources: 
+  - https://github.com/martydingo/helm-powerdns-authoritative
