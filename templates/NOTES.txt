@@ -1,0 +1,8 @@
+PowerDNS Authoritative deployed as {{ .Release.Name }}!
+
+{{- if .Values.mariadb.configuration.rootPassword }}
+The root password for the MySQL (mariadb) database was defined within values.yml, please reference this values file for the root database password if required.  
+{{- else }}
+The root password for the MySQL (mariadb) database was **not** defined within values.yml. If the database has been freshly initialised, a random root password was generated.
+You can fetch this root password by observing the logs within the {{ .Release.Name }}-db pod: `kubectl logs -n {{ .Release.Namespace }} {{ .Release.Name }}-db | grep "GENERATED ROOT PASSWORD"`
+{{- end }}

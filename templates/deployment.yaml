@@ -1,0 +1,137 @@
+apiVersion: v1
+kind: List
+metadata:
+  name: list-deployment-{{ .Release.Name }}
+  annotations:
+    meta.helm.sh/release-name: {{ .Release.Name }}
+    meta.helm.sh/release-namespace: {{ .Release.Namespace }}      
+  labels:
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+items:
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: {{ .Release.Name }}-db
+      namespace: {{ .Release.Namespace }}
+      annotations:
+        meta.helm.sh/release-name: {{ .Release.Name }}
+        meta.helm.sh/release-namespace: {{ .Release.Namespace }}
+      labels:
+        app: {{ .Release.Name }}-db
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+    spec:
+      replicas: {{ .Values.mariadb.replicaCount }}
+      selector:
+        matchLabels:
+          app: {{ .Release.Name }}-db
+      template:
+        metadata:
+          labels:
+            app: {{ .Release.Name }}-db
+        spec:
+          hostname: db
+          subdomain: {{ .Release.Name }}
+          containers:
+            - image: {{ .Values.mariadb.image.repository }}:{{ .Values.mariadb.image.tag }}
+              imagePullPolicy: {{ .Values.mariadb.image.imagePullPolicy }}
+              name: {{ .Release.Name }}-db
+              env:
+                {{- if .Values.mariadb.configuration.rootPassword }}
+                - name: MYSQL_ROOT_PASSWORD
+                  value: "{{ .Values.mariadb.configuration.rootPassword }}"
+                {{- else }}
+                - name: MARIADB_RANDOM_ROOT_PASSWORD
+                  value: "yes"
+                {{- end }}
+                - name: MYSQL_PORT
+                  value: "{{ .Values.mariadb.service.ports.db }}"
+                - name: MYSQL_DATABASE
+                  value: "{{ .Values.mariadb.configuration.database }}"
+                - name: MYSQL_USER
+                  value: "{{ .Values.mariadb.configuration.user }}"
+                - name: MYSQL_PASSWORD
+                  value: "{{ .Values.mariadb.configuration.password }}"
+              volumeMounts:
+                - mountPath: /var/lib/mysql
+                  name: vol-{{ .Release.Name }}
+                  subPath: db
+                - mountPath: /docker-entrypoint-initdb.d/schema.mysql.sql
+                  subPath: schema.mysql.sql
+                  name: vol-cm-{{ .Release.Name }}
+              ports:
+                - containerPort: 3306
+                  name: db
+              resources:
+                requests:
+                  memory: {{ .Values.mariadb.resources.requests.memory }}
+                  cpu: {{ .Values.mariadb.resources.requests.cpu }}
+                limits:
+                  memory: {{ .Values.mariadb.resources.limits.memory }}
+                  cpu: {{ .Values.mariadb.resources.limits.cpu }}
+                
+          volumes:
+            - name: vol-{{ .Release.Name }}
+              persistentVolumeClaim:
+                claimName: pvc-{{ .Release.Name }}
+            - name: vol-cm-{{ .Release.Name }}
+              configMap:
+                name: cm-{{ .Release.Name }}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: {{ .Release.Name }}
+      annotations:
+        meta.helm.sh/release-name: {{ .Release.Name }}
+        meta.helm.sh/release-namespace: {{ .Release.Namespace }}
+      labels:
+        app: {{ .Release.Name }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: {{ .Release.Name }}
+      template:
+        metadata:
+          labels:
+            app: {{ .Release.Name }}
+        spec:
+          hostname: pdns-auth
+          subdomain: {{ .Release.Name }}
+          containers:
+            - image: {{ .Values.pdns.image.repository }}:{{ .Values.pdns.image.tag }}
+              imagePullPolicy: {{ .Values.pdns.image.imagePullPolicy }}
+              name: {{ .Release.Name }}
+              command:
+                - /usr/local/sbin/pdns_server
+              args:
+                - '--guardian=yes'
+                - '--daemon=no'
+                - '--write-pid=no'
+                - '--config-dir=/etc/powerdns'
+              ports:
+                - containerPort: 5353
+                  protocol: TCP
+                  name: dns-tcp
+                - containerPort: 5353
+                  protocol: UDP
+                  name: dns
+                - containerPort: 8081
+                  protocol: TCP
+                  name: api
+              volumeMounts:
+                - mountPath: /etc/powerdns/pdns.conf
+                  subPath: pdns.conf
+                  name: vol-cm-{{ .Release.Name }}
+                  readOnly: true
+              resources:
+                requests:
+                  memory: {{ .Values.pdns.resources.requests.memory }}
+                  cpu: {{ .Values.pdns.resources.requests.cpu }}
+                limits:
+                  memory: {{ .Values.pdns.resources.limits.memory }}
+                  cpu: {{ .Values.pdns.resources.limits.cpu }}
+          volumes:
+            - name: vol-cm-{{ .Release.Name }}
+              configMap:
+                name: cm-{{ .Release.Name }}

@@ -1,0 +1,83 @@
+# Default values for helm-powerdns-authoritative.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# nameOverride: ""
+# fullnameOverride: ""
+imagePullSecrets: []
+
+storage:
+  volumeClaimTemplate: 
+    accessMode: ReadWriteMany
+    storageClassName: ""
+    # If not using dynamic persistent storage, a persistentVolume configuration will need to be configured, and the pvName configured below.
+    volumeName: ""
+    resources:
+      requests:
+        storage: 1Gi
+
+mariadb:
+  replicaCount: 1
+  configuration:
+    # A randomized root password will be configured, if rootPassword is declared undefined, and will be dumped to the database pods stdout (kubectl logs <db_pod>)
+    rootPassword: ""
+    database: pdns
+    user: pdns
+    password: CHANGE_THIS_SECRET!
+  image:
+    repository: mariadb
+    imagePullPolicy: IfNotPresent
+    # This is set as such, as when mariadb doesn't exit cleanly, and a new container is pulled, the database fails to start
+    # This is due to the fact that you can't upgrade a database that hasn't exited cleanly.
+    tag: "10.7"
+  resources:
+    # Arbitrary resource values as resource requirements differ between use cases. Please reconfigure if this doesn't meet your requirements  
+    requests:
+      memory: 128Mi
+      cpu: 125m
+    limits:
+      memory: 512Mi
+      cpu: 8000m
+  service:
+    type: ClusterIP
+    clusterIP: "None"
+    ipFamilyPolicy: PreferDualStack
+    # Affects service and pdns configuration
+    ports:
+      db: 3306
+
+pdns:
+  replicaCount: 1
+  image:
+    repository: powerdns/pdns-auth-master
+    imagePullPolicy: IfNotPresent
+    tag: "latest"
+  resources:
+    # Arbitrary resource values as resource requirements differ between use cases. Please reconfigure if this doesn't meet your requirements  
+    requests:
+      memory: 128Mi
+      cpu: 125m
+    limits:
+      memory: 512Mi
+      cpu: 8000m
+  service:
+    # Only affects the created kubernetes service
+    type: LoadBalancer
+    loadBalancerIP: ""
+    ipFamilyPolicy: PreferDualStack
+    ports: 
+      dns: 53
+      api: 8081
+  configuration: 
+    # All values from https://doc.powerdns.com/authoritative/settings.html can be removed/added here as <key>: <value> pairs.
+    # See usage of 'pdnsutil hash-password' for more information on webserver passwords & API keys - kubectl exec -it <pdns_pod_name> -- pdnsutil hash-password 
+    # and https://doc.powerdns.com/authoritative/settings.html#setting-webserver-password
+    # ---
+    primary: yes
+    # api-key: 'x'
+    # webserver-password: 'x'
+    # api: yes
+    # webserver: yes
+    # webserver-allow-from: 0.0.0.0/0
+    # webserver-address: 0.0.0.0
+ 
