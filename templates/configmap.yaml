@@ -12,7 +12,6 @@ data:
     gmysql-user={{ .Values.mariadb.configuration.user }}
     gmysql-password={{ .Values.mariadb.configuration.password }}
     gmysql-dnssec=yes
-    local-port=5353
     {{ range $key, $value := .Values.pdns.configuration }}{{ $key }}={{ $value }}
     {{ end }}
   schema.mysql.sql: |

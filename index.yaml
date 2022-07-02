@@ -3,10 +3,10 @@ entries:
   helm-powerdns-authoritative:
   - apiVersion: v2
     appVersion: 4.7.0.alpha1
-    created: "2022-07-02T14:21:27.514196+01:00"
+    created: "2022-07-02T14:25:49.750107+01:00"
     description: A Helm chart for deploying an instance of the DNS software "PowerDNS
       Authoritative Server"
-    digest: 4a29746037bb6f66e90a6980879757d0d13dac52b35145baf1f4cc189451a055
+    digest: 703bca7cf0556ec27db4ed62c4c5733b3648632adc59cb138b02f4eee7e203fe
     home: https://github.com/martydingo/helm-powerdns-authoritative
     icon: https://avatars.githubusercontent.com/u/1282630
     keywords:
@@ -29,7 +29,7 @@ entries:
     version: 1.0.2
   - apiVersion: v2
     appVersion: 4.7.0.alpha1
-    created: "2022-07-02T14:21:27.513005+01:00"
+    created: "2022-07-02T14:25:49.748743+01:00"
     description: A Helm chart for deploying an instance of the DNS software "PowerDNS
       Authoritative Server"
     digest: 2f72b901a7a80a0f1e4536584fa21b432411e2bdbaba5873b88a73df249509b8
@@ -55,7 +55,7 @@ entries:
     version: 1.0.1
   - apiVersion: v2
     appVersion: 4.7.0.alpha1
-    created: "2022-07-02T14:21:27.511618+01:00"
+    created: "2022-07-02T14:25:49.747983+01:00"
     description: A Helm chart for deploying an instance of the DNS software "PowerDNS
       Authoritative Server"
     digest: 9418921672ad83ed57379c343e7c89b8b31c9c038d71e59f7fa301869709cb23
@@ -79,4 +79,4 @@ entries:
     urls:
     - https://martydingo.github.io/helm-powerdns-authoritative/helm-powerdns-authoritative-1.0.0.tgz
     version: 1.0.0
-generated: "2022-07-02T14:21:27.506766+01:00"
+generated: "2022-07-02T14:25:49.746531+01:00"
