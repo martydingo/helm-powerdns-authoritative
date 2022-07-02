@@ -49,7 +49,7 @@ items:
       - name: dns
         port: {{ .Values.pdns.service.ports.dns }}
         protocol: TCP
-        targetPort: 5353
+        targetPort: 53
       - name: api
         port: {{ .Values.pdns.service.ports.api }}
         protocol: TCP

@@ -110,10 +110,10 @@ items:
                 - '--write-pid=no'
                 - '--config-dir=/etc/powerdns'
               ports:
-                - containerPort: 5353
+                - containerPort: 53
                   protocol: TCP
                   name: dns-tcp
-                - containerPort: 5353
+                - containerPort: 53
                   protocol: UDP
                   name: dns
                 - containerPort: 8081
@@ -124,6 +124,9 @@ items:
                   subPath: pdns.conf
                   name: vol-cm-{{ .Release.Name }}
                   readOnly: true
+              securityContext:
+                privileged: true
+                runAsUser: 0
               resources:
                 requests:
                   memory: {{ .Values.pdns.resources.requests.memory }}
