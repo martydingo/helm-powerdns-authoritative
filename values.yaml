@@ -62,6 +62,7 @@ pdns:
       cpu: 8000m
   service:
     # Only affects the created kubernetes service
+    annotations: []
     type: LoadBalancer
     loadBalancerIP: ""
     ipFamilyPolicy: PreferDualStack

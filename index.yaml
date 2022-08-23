@@ -3,7 +3,33 @@ entries:
   helm-powerdns-authoritative:
   - apiVersion: v2
     appVersion: 4.7.0.alpha1
-    created: "2022-07-02T14:25:49.750107+01:00"
+    created: "2022-08-23T13:26:19.513874+01:00"
+    description: A Helm chart for deploying an instance of the DNS software "PowerDNS
+      Authoritative Server"
+    digest: eedae39422429110d42f906bacb390bdbb3c8cee6073f4cb32f89501cabb548d
+    home: https://github.com/martydingo/helm-powerdns-authoritative
+    icon: https://avatars.githubusercontent.com/u/1282630
+    keywords:
+    - pdns
+    - powerdns
+    - auth
+    - authoritative
+    - dns
+    - nameserver
+    maintainers:
+    - email: martin.george@dingo.management
+      name: Martin George
+      url: https://s.gravatar.com/avatar/364bababfd0f533bf64b60c8a206e851
+    name: helm-powerdns-authoritative
+    sources:
+    - https://github.com/martydingo/helm-powerdns-authoritative
+    type: application
+    urls:
+    - https://martydingo.github.io/helm-powerdns-authoritative/helm-powerdns-authoritative-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v2
+    appVersion: 4.7.0.alpha1
+    created: "2022-08-23T13:26:19.510191+01:00"
     description: A Helm chart for deploying an instance of the DNS software "PowerDNS
       Authoritative Server"
     digest: 703bca7cf0556ec27db4ed62c4c5733b3648632adc59cb138b02f4eee7e203fe
@@ -29,7 +55,7 @@ entries:
     version: 1.0.2
   - apiVersion: v2
     appVersion: 4.7.0.alpha1
-    created: "2022-07-02T14:25:49.748743+01:00"
+    created: "2022-08-23T13:26:19.507793+01:00"
     description: A Helm chart for deploying an instance of the DNS software "PowerDNS
       Authoritative Server"
     digest: 2f72b901a7a80a0f1e4536584fa21b432411e2bdbaba5873b88a73df249509b8
@@ -55,7 +81,7 @@ entries:
     version: 1.0.1
   - apiVersion: v2
     appVersion: 4.7.0.alpha1
-    created: "2022-07-02T14:25:49.747983+01:00"
+    created: "2022-08-23T13:26:19.506278+01:00"
     description: A Helm chart for deploying an instance of the DNS software "PowerDNS
       Authoritative Server"
     digest: 9418921672ad83ed57379c343e7c89b8b31c9c038d71e59f7fa301869709cb23
@@ -79,4 +105,4 @@ entries:
     urls:
     - https://martydingo.github.io/helm-powerdns-authoritative/helm-powerdns-authoritative-1.0.0.tgz
     version: 1.0.0
-generated: "2022-07-02T14:25:49.746531+01:00"
+generated: "2022-08-23T13:26:19.504535+01:00"
