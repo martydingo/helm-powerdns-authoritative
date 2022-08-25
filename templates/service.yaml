@@ -41,6 +41,8 @@ items:
         {{ range $key, $value := .Values.pdns.service.annotations }}{{ $key }}: {{ $value }}{{ end }}{{ end }}
       labels:
         app.kubernetes.io/managed-by: {{ .Release.Service }}
+        app.kubernetes.io/name: powerdns-authoritative
+        app.kubernetes.io/instance: powerdns-authoritative-{{ .Release.Name }}
     spec:
       type: {{ .Values.pdns.service.type }}
       loadBalancerIP: {{ .Values.pdns.service.loadBalancerIP }}

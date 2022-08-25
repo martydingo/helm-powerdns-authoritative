@@ -6,6 +6,10 @@
 # fullnameOverride: ""
 imagePullSecrets: []
 
+
+serviceMonitor:
+  enabled: true
+
 storage:
   volumeClaimTemplate: 
     accessMode: ReadWriteMany

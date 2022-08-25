@@ -1,0 +1,15 @@
+{{ if .Values.serviceMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: servicemonitor-{{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  endpoints:
+  - interval: 30s
+    port: api
+    scrapeTimeout: 15s
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: powerdns-authoritative-{{ .Release.Name }}
+{{ end }}

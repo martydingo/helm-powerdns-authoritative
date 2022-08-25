@@ -95,6 +95,8 @@ items:
         metadata:
           labels:
             app: {{ .Release.Name }}
+            app.kubernetes.io/name: powerdns-authoritative
+            app.kubernetes.io/instance: powerdns-authoritative-{{ .Release.Name }}
         spec:
           hostname: pdns-auth
           subdomain: {{ .Release.Name }}
